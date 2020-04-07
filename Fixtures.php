@@ -14,12 +14,7 @@ class Fixtures
     public function generate(): void
     {
         $connection = $this->getConnection();
-
         try {
-            //$connection->beginTransaction();
-            //$this->cleanup();
-            //$connection->commit();
-
             $connection->beginTransaction();
 
             //$this->generateEmployees(50);
@@ -57,12 +52,6 @@ class Fixtures
         }
 
         return self::$connection;
-    }
-
-    private function cleanup(): void
-    {
-        $connection = $this->getConnection();
-
     }
 
     /**
@@ -107,7 +96,8 @@ class Fixtures
         $minAgeTimestamp = $currentTimestamp - (31556952 * 65);
         $maxAgeTimestamp = $currentTimestamp - (31556952 * 18);
 
-        $statement = $connection->prepare('INSERT INTO employee (position_id, first_name, last_name, email, dob, salary)
+        $statement = $connection->prepare(
+            'INSERT INTO employee (position_id, first_name, last_name, email, dob, salary)
             VALUES (:positionId, :firstName, :lastName, :email, :dob, :salary)
             ON DUPLICATE KEY UPDATE first_name=VALUES(first_name), last_name=VALUES(last_name)'
         );
@@ -146,7 +136,8 @@ class Fixtures
         $minTimestamp = strtotime('11-12-16');
         $maxTimestamp = time();
 
-        $statement = $connection->prepare('INSERT INTO salary (employee_id, amount, salary_date)
+        $statement = $connection->prepare(
+            'INSERT INTO salary (employee_id, amount, salary_date)
             VALUES (:employeeId, :amount, :salaryDate)
             ON DUPLICATE KEY UPDATE salary_date=VALUES(salary_date)'
         );
@@ -193,7 +184,8 @@ class Fixtures
 
         $types = ['Škoda 22TrG', 'ElectroLAZ-12', 'ЗиУ-5'];
 
-        $statement = $connection->prepare('INSERT INTO transport (type, number)
+        $statement = $connection->prepare(
+            'INSERT INTO transport (type, number)
             VALUES (:type, :number)
             ON DUPLICATE KEY UPDATE number=VALUES(number)'
         );
@@ -225,7 +217,8 @@ class Fixtures
         $minTimestamp = strtotime('01-01-17');
         $maxTimestamp = time();
 
-        $statement = $connection->prepare('INSERT INTO transport_data (employee_id, transport_id, income, date)
+        $statement = $connection->prepare(
+            'INSERT INTO transport_data (employee_id, transport_id, income, date)
             VALUES (:employeeId, :transportId, :income, :date)
             ON DUPLICATE KEY UPDATE date=VALUES(date)'
         );
