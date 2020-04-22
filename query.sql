@@ -35,11 +35,11 @@ GROUP BY e.employee_id;
 # query #5
 # no inbex 2,747-2,892
 # index 2,761-2,765
-SELECT t.number, SUM(td.income) as sum, AVG(td.income) as avarage, COUNT(td.transport_data_id) as count_day
+SELECT t.number, COUNT(td.transport_data_id) as total_days_worked, SUM(td.income) as total_income, AVG(td.income) as average_income
 FROM transport_data as td
          INNER JOIN transport as t on td.transport_id = t.transport_id
 GROUP BY td.transport_id
-ORDER BY COUNT(td.transport_data_id), AVG(td.income), SUM(td.income) DESC;
+ORDER BY total_days_worked, total_income, average_income DESC;
 
 # query #6
 # no inbex 35-73
